@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/meal_type_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imv_meal"
+        android:layout_width="135dp"
+        android:layout_height="135dp"
+        android:layout_marginStart="@dimen/base_margin_between"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="@dimen/base_margin_between"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meal_type_divider"
+        tools:src="@drawable/icn_qr_code" />
+
+    <TextView
+        android:id="@+id/txv_meal_name"
+        style="@style/BlackTextBoldStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="@dimen/base_margin_between"
+        android:includeFontPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imv_meal"
+        app:layout_constraintTop_toTopOf="@+id/imv_meal"
+        tools:text="Ветчина и грибы" />
+
+    <TextView
+        android:id="@+id/txv_meal_descr"
+        style="@style/FoodDescrTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/base_margin_between"
+        android:ellipsize="end"
+        android:maxLines="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txv_meal_name"
+        app:layout_constraintTop_toBottomOf="@+id/txv_meal_name"
+        tools:text="Ветчина,шампиньоны, увеличинная порция моцареллы, томатный соус" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imv_meal"
+        app:layout_constraintEnd_toEndOf="@+id/txv_meal_descr"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/txv_meal_descr"
+        app:layout_constraintTop_toBottomOf="@+id/txv_meal_descr"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/txv_meal_price"
+            style="@style/RedLowTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@drawable/red_stroke_rectangle"
+            android:gravity="center"
+            android:paddingStart="18dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="8dp"
+            tools:text="от 450 р" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

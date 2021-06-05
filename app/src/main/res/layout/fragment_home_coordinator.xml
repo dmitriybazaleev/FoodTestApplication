@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_home_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/abl_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="@dimen/base_elevation">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/ctl_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rclv_banners"
+                android:layout_width="match_parent"
+                android:paddingStart="@dimen/base_margin_between"
+                android:paddingTop="2dp"
+                android:paddingEnd="@dimen/base_margin_between"
+                android:clipToPadding="false"
+                android:layout_height="wrap_content"
+                android:paddingBottom="24dp" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rclv_food_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingTop="2dp"
+            android:paddingStart="@dimen/base_margin_between"
+            android:paddingEnd="0dp"
+            android:paddingBottom="16dp" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rclv_all_foods"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

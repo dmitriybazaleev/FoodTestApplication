@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <LinearLayout
+        android:id="@+id/lnyt_home_current_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_between"
+        android:layout_marginTop="@dimen/current_city_margin_top"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@+id/imb_qr_code"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txv_current_city"
+            style="@style/BaseBlackTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/moscow" />
+
+        <ImageButton
+            android:id="@+id/imb_current_city_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@null"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:src="@drawable/icn_black_arrow_down" />
+
+    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/imb_qr_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:contentDescription="@null"
+        android:paddingStart="@dimen/base_margin_between"
+        android:paddingEnd="@dimen/base_margin_between"
+        android:src="@drawable/icn_qr_code"
+        app:layout_constraintBottom_toBottomOf="@+id/lnyt_home_current_city"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/lnyt_home_current_city"
+        app:layout_constraintTop_toTopOf="@+id/lnyt_home_current_city" />
+
+
+    <include
+        android:id="@+id/collapsing_layout"
+        layout="@layout/fragment_home_coordinator"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/collapsing_margin_top"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lnyt_home_current_city"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

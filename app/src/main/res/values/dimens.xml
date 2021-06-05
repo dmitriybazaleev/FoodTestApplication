@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    For View-->
+    <dimen name="base_view_text_size">16sp</dimen>
+
+<!--    For HomeFragment margins/padding-->
+    <dimen name="base_margin_between">16dp</dimen>
+    <dimen name="current_city_margin_top">25dp</dimen>
+    <dimen name="base_elevation">10dp</dimen>
+    <dimen name="collapsing_margin_top">35dp</dimen>
+
+</resources>
