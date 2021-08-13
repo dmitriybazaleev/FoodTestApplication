@@ -3,24 +3,22 @@ package com.delivery_test.view.base
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import com.delivery_test.base.Constants
 import com.delivery_test.view.MainActivity
 
-/**
- * Базовый Фрагмент. В generic должен принимать в себя binding с layout
- * И еще принимает в себя ViewModel, которая будет работать с фрагментом
- */
-abstract class BaseFragment<B: ViewBinding, VM: ViewModel>: Fragment() {
+abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
-    // Поле для обращения к View Model
-    var viewModel: VM? = null
+    companion object {
+        const val BASE_FRAGMENT_TAG = "baseFragmentTag"
+    }
 
     // Поле переданного binding обращение к view
     var binding: B? = null
@@ -28,8 +26,7 @@ abstract class BaseFragment<B: ViewBinding, VM: ViewModel>: Fragment() {
     // Если необходимо получить доступ к Activity
     var mainActivity: MainActivity? = null
 
-    // Этот метод нужен для того, чтоб вернуть нужную View Model
-    abstract fun onCreateViewModel(savedInstanceState: Bundle?): VM
+    var progressBar: ProgressBar? = null
 
     // Нужно передать и вернуть наш сгенерированный binding
     abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> B
@@ -37,11 +34,6 @@ abstract class BaseFragment<B: ViewBinding, VM: ViewModel>: Fragment() {
     override fun onAttach(context: Context) {
         mainActivity = activity as MainActivity
         super.onAttach(context)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        onBind(savedInstanceState)
     }
 
     override fun onDetach() {
@@ -63,14 +55,27 @@ abstract class BaseFragment<B: ViewBinding, VM: ViewModel>: Fragment() {
         return requireNotNull(binding?.root)
     }
 
-    // Метод показывает Progress Bar
-    fun showProgress() {
-        mainActivity?.activityBinding?.fmlytMainProgress?.visibility = View.VISIBLE
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onBind()
     }
 
-    // Метод скрывает Progress Bar
+    abstract fun getProgress(): ProgressBar?
+
+    private fun onBind() {
+        getProgress()?.let { resultProgress ->
+            progressBar = resultProgress
+        } ?: run {
+            Log.d(BASE_FRAGMENT_TAG, "Progress bar не указан")
+        }
+    }
+
+    fun showProgress() {
+        progressBar?.visibility = View.VISIBLE
+    }
+
     fun hideProgress() {
-        mainActivity?.activityBinding?.fmlytMainProgress?.visibility = View.GONE
+        progressBar?.visibility = View.GONE
     }
 
     fun showConnectionErrorDialog() {
@@ -93,10 +98,5 @@ abstract class BaseFragment<B: ViewBinding, VM: ViewModel>: Fragment() {
         if (message.isNotEmpty()) {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
-    }
-
-    // Инициализация View Model
-    private fun onBind(savedInstanceState: Bundle?) {
-        viewModel = onCreateViewModel(savedInstanceState)
     }
 }

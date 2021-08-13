@@ -13,19 +13,19 @@ import kotlinx.parcelize.Parcelize
 data class FoodTypeUiEntity(
     @PrimaryKey
     @SerializedName(NetworkConstants.ID_CATEGORY)
-    var idCategory: Int?,
+    val idCategory: Int?,
 
     @ColumnInfo(name = "strCategory")
     @SerializedName(NetworkConstants.STR_CATEGORY)
-    var strCategory: String?,
+    val strCategory: String?,
 
     @ColumnInfo(name = "strCategoryThumb")
     @SerializedName(NetworkConstants.STR_CATEGORY_THUMB)
-    var strCategoryThumb: String?,
+    val strCategoryThumb: String?,
 
     @ColumnInfo(name = "strCategoryDescription")
     @SerializedName(NetworkConstants.STR_CATEGORY_DESCRIPTION)
-    var strCategoryDescription: String?,
+    val strCategoryDescription: String?,
 
     var isChecked: Boolean
 ) : Parcelable

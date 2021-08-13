@@ -15,7 +15,7 @@ import javax.inject.Inject
  * И служит для запросов данных еды
  * Будет использоваться в HomeViewModel
  */
-class HomeUseCase @Inject constructor(
+class HomeUseCase @Inject  constructor(
     private val api: FoodApi,
     private val foodsListDao: FoodsListDao,
     private val foodsTypeDao: FoodsTypeDao

@@ -20,7 +20,7 @@ class HomeViewModel : ViewModel() {
 
     private var compositeDisposable = CompositeDisposable()
 
-    private var selectedPosition: Int = 0
+    var selectedPosition: Int = 0
 
     private val foodTypeLiveData = MutableLiveData<MutableList<FoodTypeUiEntity>>()
     private val foodListLiveData = MutableLiveData<MutableList<FoodUiEntity>>()
@@ -32,27 +32,32 @@ class HomeViewModel : ViewModel() {
 
     init {
         DeliveryApp.component.inject(this)
+        getAllFoodsType()
     }
 
     // Получаем планку с категориями
-    fun getAllFoodsType() {
+    private fun getAllFoodsType() {
         val disposable = homeUseCase.getAllFoodTypes()
             .filter {
                 it.categories?.size != 0 && it.categories != null
             }
             .subscribeOn(Schedulers.io())
+            .map { uiModel ->
+                uiModel.categories?.let {
+                    insertFoodTypeToDataBase(it)
+                }
+                uiModel
+            }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { responseServerLiveData.value = ServerResponse.SHOW_PROGRESS }
             .doFinally { responseServerLiveData.value = ServerResponse.HIDE_PROGRESS }
             .subscribe({
                 Log.d(HOME_FRAGMENT_TAG, "data size: ${it.categories?.size}")
-                it.categories?.let { data ->
-                    insertFoodTypeToDataBase(data)
-                    data[0].strCategory?.let { strCategory ->
-                        Log.d(HOME_FRAGMENT_TAG, "request name: $strCategory")
-                        getFoodListByName(strCategory, 0)
-                    }
+                it.categories?.get(0)?.strCategory?.let { strCategory ->
+                    Log.d(HOME_FRAGMENT_TAG, "request name: $strCategory")
+                    getFoodListByName(strCategory, 0)
                 }
+
                 foodTypeLiveData.value = it.categories
             }, {
                 Log.d(HOME_FRAGMENT_TAG, "getAllFoods error: ${it.message}")
@@ -67,10 +72,12 @@ class HomeViewModel : ViewModel() {
 
         compositeDisposable.add(disposable)
     }
+
     fun getFoodList(entity: FoodTypeUiEntity, clickPosition: Int) {
         val name = entity.strCategory ?: return
         getFoodListByName(name, clickPosition)
     }
+
     // получаем список меню по имени
     private fun getFoodListByName(name: String, clickPosition: Int) {
         viewEvent.postValue(
@@ -89,6 +96,7 @@ class HomeViewModel : ViewModel() {
                     insertMainFoodListToDataBase(listResult)
 
                     foodListLiveData.value = it.searchFoodResultList
+
                 } ?: run {
                     responseServerLiveData.value = ServerResponse.NOTHING_TO_SHOW
                 }

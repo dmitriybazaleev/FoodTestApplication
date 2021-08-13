@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-
     <LinearLayout
         android:id="@+id/lnyt_home_current_city"
         android:layout_width="wrap_content"
@@ -63,11 +62,20 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/collapsing_margin_top"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lnyt_home_current_city"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ProgressBar
+        android:id="@+id/pb_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/base_red_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

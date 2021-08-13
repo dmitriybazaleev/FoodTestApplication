@@ -21,12 +21,14 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rclv_banners"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
                 android:paddingStart="@dimen/base_margin_between"
                 android:paddingTop="2dp"
                 android:paddingEnd="@dimen/base_margin_between"
-                android:clipToPadding="false"
-                android:layout_height="wrap_content"
-                android:paddingBottom="24dp" />
+                android:paddingBottom="24dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -36,10 +38,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:paddingTop="2dp"
+            android:orientation="horizontal"
             android:paddingStart="@dimen/base_margin_between"
+            android:paddingTop="2dp"
             android:paddingEnd="0dp"
-            android:paddingBottom="16dp" />
+            android:paddingBottom="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -47,6 +51,8 @@
         android:id="@+id/rclv_all_foods"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

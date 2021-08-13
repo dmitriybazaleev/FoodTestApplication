@@ -11,7 +11,7 @@ import com.delivery_test.view.recyclerview.holders.FoodItemHolder
 
 class FoodListAdapter : RecyclerView.Adapter<FoodItemHolder>() {
 
-    private var mainFoodList: MutableList<FoodUiEntity> = mutableListOf()
+    var mainFoodList: MutableList<FoodUiEntity> = mutableListOf()
 
     fun addFoods(list: MutableList<FoodUiEntity>) {
         val diffUtilCallBack = FoodListDiffUtil(mainFoodList, newList = list)
