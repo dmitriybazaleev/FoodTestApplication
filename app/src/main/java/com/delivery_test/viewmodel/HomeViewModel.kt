@@ -10,6 +10,7 @@ import com.delivery_test.database.databaseentity.FoodTypeUiEntity
 import com.delivery_test.database.databaseentity.FoodUiEntity
 import com.delivery_test.network.ServerResponse
 import com.delivery_test.usecase.HomeUseCase
+import com.delivery_test.view.event.HomeViewEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -44,7 +45,7 @@ class HomeViewModel : ViewModel() {
             .subscribeOn(Schedulers.io())
             .map { uiModel ->
                 uiModel.categories?.let {
-                    insertFoodTypeToDataBase(it)
+                    homeUseCase.insertTypeOfFoodListToDb(it)
                 }
                 uiModel
             }
@@ -88,19 +89,23 @@ class HomeViewModel : ViewModel() {
         selectedPosition = clickPosition
         val disposable = homeUseCase.getAllMeals(name)
             .subscribeOn(Schedulers.io())
+            .filter { f ->
+                if (f.searchFoodResultList == null) {
+                    responseServerLiveData.postValue(ServerResponse.NOTHING_TO_SHOW)
+                }
+
+                f.searchFoodResultList != null
+            }
+            .map { data ->
+                homeUseCase.insertFoodsListToDb(data.searchFoodResultList)
+                data
+            }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { responseServerLiveData.value = ServerResponse.SHOW_PROGRESS }
             .doFinally { responseServerLiveData.value = ServerResponse.HIDE_PROGRESS }
             .subscribe({
-                it.searchFoodResultList?.let { listResult ->
-                    insertMainFoodListToDataBase(listResult)
-
-                    foodListLiveData.value = it.searchFoodResultList
-
-                } ?: run {
-                    responseServerLiveData.value = ServerResponse.NOTHING_TO_SHOW
-                }
                 Log.d(HOME_FRAGMENT_TAG, "food by name size: ${it.searchFoodResultList?.size}")
+                foodListLiveData.value = it.searchFoodResultList
 
             }, {
                 when (it) {
@@ -110,34 +115,6 @@ class HomeViewModel : ViewModel() {
                 }
                 onSearchFoodFromDataBase(name)
                 Log.d(HOME_FRAGMENT_TAG, "getFoodByName error: ${it.message}")
-            })
-
-        compositeDisposable.add(disposable)
-    }
-
-    private fun insertFoodTypeToDataBase(
-        data: MutableList<FoodTypeUiEntity>
-    ) {
-        val disposable = homeUseCase.insertTypeOfFoodListToDb(data)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({}, {
-                Log.d(HOME_FRAGMENT_TAG, "error insert food type to db: ${it.message}")
-            })
-
-        compositeDisposable.add(disposable)
-    }
-
-    private fun insertMainFoodListToDataBase(
-        data: MutableList<FoodUiEntity>
-    ) {
-        val disposable = homeUseCase.insertFoodsListToDb(data)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                Log.d(HOME_FRAGMENT_TAG, "")
-            }, {
-                Log.d(HOME_FRAGMENT_TAG, "error insert food to db: ${it.message}")
             })
 
         compositeDisposable.add(disposable)

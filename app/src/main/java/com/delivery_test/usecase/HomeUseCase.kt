@@ -15,7 +15,7 @@ import javax.inject.Inject
  * И служит для запросов данных еды
  * Будет использоваться в HomeViewModel
  */
-class HomeUseCase @Inject  constructor(
+class HomeUseCase @Inject constructor(
     private val api: FoodApi,
     private val foodsListDao: FoodsListDao,
     private val foodsTypeDao: FoodsTypeDao
@@ -33,29 +33,19 @@ class HomeUseCase @Inject  constructor(
         return foodsTypeDao.getAllTypesOfFood()
     }
 
-    fun getAllLastFoodsFromDb(): Single<MutableList<FoodUiEntity>> {
-        return foodsListDao.getLastMealsList()
-    }
-
     fun onSearchFoodFromDb(search: String): Single<MutableList<FoodUiEntity>> {
         return foodsListDao.onSearchFood(search)
     }
 
     fun insertFoodsListToDb(
-        foodsList: MutableList<FoodUiEntity>
-    ): Single<MutableList<FoodUiEntity>> {
-        return Single.create {  emitter ->
-            foodsListDao.insertLastFoodList(foodsList)
-            emitter.onSuccess(foodsList)
-        }
+        foodsList: MutableList<FoodUiEntity>?
+    ) {
+        foodsListDao.insertLastFoodList(foodsList)
     }
 
     fun insertTypeOfFoodListToDb(
         typeOfFoodList: MutableList<FoodTypeUiEntity>
-    ): Single<MutableList<FoodTypeUiEntity>> {
-        return Single.create { emitter ->
-            foodsTypeDao.insertLastTypeOfFood(typeOfFoodList)
-            emitter.onSuccess(typeOfFoodList)
-        }
+    ) {
+        foodsTypeDao.insertLastTypeOfFood(typeOfFoodList)
     }
 }

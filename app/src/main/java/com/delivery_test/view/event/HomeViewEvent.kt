@@ -1,4 +1,4 @@
-package com.delivery_test.viewmodel
+package com.delivery_test.view.event
 
 sealed class HomeViewEvent {
     class FoodRequestSuccess(

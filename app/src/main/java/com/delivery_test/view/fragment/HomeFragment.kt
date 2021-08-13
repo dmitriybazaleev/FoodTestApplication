@@ -15,7 +15,7 @@ import com.delivery_test.databinding.FragmentHomeBinding
 import com.delivery_test.network.ServerResponse
 import com.delivery_test.view.base.BaseFragment
 import com.delivery_test.view.recyclerview.event.IFoodTypeEvent
-import com.delivery_test.viewmodel.HomeViewEvent
+import com.delivery_test.view.event.HomeViewEvent
 import com.delivery_test.viewmodel.HomeViewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), IFoodTypeEvent {

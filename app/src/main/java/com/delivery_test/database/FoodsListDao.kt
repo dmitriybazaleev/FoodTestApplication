@@ -20,5 +20,5 @@ abstract class FoodsListDao {
     abstract fun onSearchFood(search: String): Single<MutableList<FoodUiEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertLastFoodList(data: MutableList<FoodUiEntity>)
+    abstract fun insertLastFoodList(data: MutableList<FoodUiEntity>?)
 }
